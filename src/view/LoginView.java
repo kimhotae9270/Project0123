@@ -67,8 +67,8 @@ public class LoginView extends Frame{
                 }*/
                 dispose();
                 //로그인이 되면 메인 뷰로
-                //MainView main = new MainView();
-                //main.mainView();
+                MainView main = new MainView();
+                main.mainView();
             }
 
 
@@ -88,7 +88,7 @@ public class LoginView extends Frame{
     }
 
     public boolean getIsLogin(){
-        System.out.println("asdsadas");
+
         return this.isLogin;
 
     }

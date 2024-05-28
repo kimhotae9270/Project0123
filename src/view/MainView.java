@@ -101,6 +101,8 @@ public class MainView extends Frame{
                 public void actionPerformed(ActionEvent e) {
                     currentDay = finalday;
                     // 버튼 클릭 시 다음 화면으로 이동하는 동작 추가
+                    ScheduleView schedule = new ScheduleView();
+                    schedule.scheduleView();
                     //new LoadList();
                 }
             });
@@ -112,9 +114,17 @@ public class MainView extends Frame{
 
         repaint();
         setVisible(true);
-        System.out.println("adasdasd");
-    }
 
+    }
+    public static int getCurrentYear() {
+        return currentYear;
+    }
+    public static int getCurrentMonth(){
+        return currentMonth;
+    }
+    public static int getCurrentDay(){
+        return currentDay;
+    }
 
     }
 

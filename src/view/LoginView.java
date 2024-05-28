@@ -88,7 +88,9 @@ public class LoginView extends Frame{
     }
 
     public boolean getIsLogin(){
+        System.out.println("asdsadas");
         return this.isLogin;
+
     }
 
     public static void main(String[] args) {

@@ -112,6 +112,7 @@ public class MainView extends Frame{
 
         repaint();
         setVisible(true);
+        System.out.println("adasdasd");
     }
 
 

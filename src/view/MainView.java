@@ -55,7 +55,8 @@ public class MainView extends Frame {
         repeatButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 반복 일정 추가 기능 구현
-                System.out.println("반복 일정 추가 기능 호출됨");
+                RepeatScheduleView rp = new RepeatScheduleView();
+                rp.repeatScheduleView();
             }
         });
         centerPanel.add(repeatButton);
@@ -64,7 +65,8 @@ public class MainView extends Frame {
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 일정 삭제 기능 구현
-                System.out.println("일정 삭제 기능 호출됨");
+                RemoveScheduleView rm = new RemoveScheduleView();
+                rm.removeScheduleView();
             }
         });
         centerPanel.add(deleteButton);

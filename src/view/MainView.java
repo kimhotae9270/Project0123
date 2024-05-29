@@ -7,18 +7,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
-public class MainView extends Frame{
+public class MainView extends Frame {
     private static int currentYear;
     private static int currentMonth;
     private static int currentDay;
     private Label monthLabel;
     private Panel calendarPanel;
 
-    void mainView(){
+    void mainView() {
         currentYear = LocalDate.now().getYear();
         currentMonth = LocalDate.now().getMonthValue();
 
-        setTitle(currentYear+"년 "+currentMonth+"월");
+        setTitle(currentYear + "년 " + currentMonth + "월");
         setSize(500, 500);
         setLayout(new BorderLayout());
 
@@ -41,12 +41,35 @@ public class MainView extends Frame{
                 } else {
                     currentMonth--;
                 }
-                setTitle(currentYear+"년 "+currentMonth+"월");
+                setTitle(currentYear + "년 " + currentMonth + "월");
                 updateMonthLabel();
                 updateCalendarPanel();
             }
         });
         buttonPanel.add(prevButton, BorderLayout.WEST);
+
+        // Create a panel to hold the center buttons with padding
+        Panel centerPanel = new Panel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+
+        Button repeatButton = new Button("반복 일정 추가");
+        repeatButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // 반복 일정 추가 기능 구현
+                System.out.println("반복 일정 추가 기능 호출됨");
+            }
+        });
+        centerPanel.add(repeatButton);
+
+        Button deleteButton = new Button("일정 삭제");
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // 일정 삭제 기능 구현
+                System.out.println("일정 삭제 기능 호출됨");
+            }
+        });
+        centerPanel.add(deleteButton);
+
+        buttonPanel.add(centerPanel, BorderLayout.CENTER);
 
         Button nextButton = new Button("다음 달");
         nextButton.addActionListener(new ActionListener() {
@@ -57,7 +80,7 @@ public class MainView extends Frame{
                 } else {
                     currentMonth++;
                 }
-                setTitle(currentYear+"년 "+currentMonth+"월");
+                setTitle(currentYear + "년 " + currentMonth + "월");
                 updateMonthLabel();
                 updateCalendarPanel();
             }
@@ -95,11 +118,11 @@ public class MainView extends Frame{
 
         int daysInMonth = firstDayOfMonth.lengthOfMonth();
         for (int day = 1; day <= daysInMonth; day++) {
-            final int finalday = day;
-            Button button = new Button(String.valueOf(finalday));
+            final int finalDay = day;
+            Button button = new Button(String.valueOf(finalDay));
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    currentDay = finalday;
+                    currentDay = finalDay;
                     // 버튼 클릭 시 다음 화면으로 이동하는 동작 추가
                     ScheduleView schedule = new ScheduleView();
                     schedule.scheduleView();
@@ -110,23 +133,24 @@ public class MainView extends Frame{
         }
 
         revalidate();
-
-
         repaint();
         setVisible(true);
-
     }
+
     public static int getCurrentYear() {
         return currentYear;
     }
-    public static int getCurrentMonth(){
+
+    public static int getCurrentMonth() {
         return currentMonth;
     }
-    public static int getCurrentDay(){
+
+    public static int getCurrentDay() {
         return currentDay;
     }
 
+    public static void main(String[] args) {
+        MainView mainView = new MainView();
+        mainView.mainView();
     }
-
-
-
+}

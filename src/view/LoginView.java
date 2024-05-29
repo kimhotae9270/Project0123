@@ -7,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class LoginView extends Frame{
-    private boolean isLogin = false;
+
     void loginView(){
         setTitle("로그인 폼");
         setSize(300, 120);
@@ -87,11 +87,7 @@ public class LoginView extends Frame{
         setVisible(true);
     }
 
-    public boolean getIsLogin(){
 
-        return this.isLogin;
-
-    }
 
     public static void main(String[] args) {
         LoginView login = new LoginView();

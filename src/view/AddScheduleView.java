@@ -26,7 +26,7 @@ public class AddScheduleView {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String newItem = textArea.getText().trim();
-                //추가 기능 구현
+
             }
         });
         buttonPanel.add(addButton);

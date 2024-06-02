@@ -151,8 +151,5 @@ public class MainView extends Frame {
         return currentDay;
     }
 
-    public static void main(String[] args) {
-        MainView mainView = new MainView();
-        mainView.mainView();
-    }
+
 }

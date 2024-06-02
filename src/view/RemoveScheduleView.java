@@ -48,7 +48,7 @@ public class RemoveScheduleView implements PopUpView{
                 Checkbox selectedCheckbox = checkboxGroup.getSelectedCheckbox();
                 if (selectedCheckbox != null) {
                     String selectedWeek = selectedCheckbox.getLabel();
-                    //여기에 삭제 구현
+
                 } else {
                     //선택해 주세요 팝업 구현
                     popUp("주차를 선택해주세요.");

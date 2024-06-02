@@ -77,9 +77,7 @@ public class LoginView extends Frame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //회원가입 기능 구현
-                // TODO Auto-generated method stub
-                //new Register(idField.getText(),pwField.getText());
+                new SignUpView();
 
             }
         });

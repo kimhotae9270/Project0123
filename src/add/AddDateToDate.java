@@ -1,17 +1,21 @@
 package add;
 
+import user.User;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
 class AddDateToDate extends Add {
     private ScheduleManager scheduleManager;
 
-    public AddDateToDate(ScheduleManager eventManager) {
-        this.scheduleManager = eventManager;
+    public AddDateToDate() {
+
+        //this.scheduleManager = eventManager;
     }
 
     @Override
     void addSchedule() {
+        System.out.println(getUserPath());
         Scanner s = new Scanner(System.in);
         System.out.println("일정을 시작할 날짜를 입력하세요 yyyy-mm-dd");
 
@@ -34,5 +38,10 @@ class AddDateToDate extends Add {
             currentDate = currentDate.plusDays(1);
         }
         s.close();
+    }
+
+    public static void main(String[] args) {
+        AddDateToDate ad = new AddDateToDate();
+
     }
 }

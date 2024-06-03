@@ -1,10 +1,15 @@
 package view;
 
+import user.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,7 +23,7 @@ public class SignUpView extends JFrame {
     public SignUpView() {
         setTitle("회원 가입");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridLayout(4, 2));
@@ -46,8 +51,14 @@ public class SignUpView extends JFrame {
                 if (!password.equals(confirmPassword)) {
                     JOptionPane.showMessageDialog(SignUpView.this, "비밀번호가 일치하지 않습니다!", "오류", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt", true))) {
-                        writer.write(username + "," + password);
+
+
+                    File f = new File("C:\\schedule_system");
+                    if(!f.exists()) {
+                        f.mkdirs();
+                    }
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\schedule_system\\user.txt", true))) {
+                        writer.write(username + ";" + password);
                         writer.newLine();
                         JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ex) {
@@ -67,16 +78,14 @@ public class SignUpView extends JFrame {
         });
         panel.add(cancelButton);
 
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
         add(panel);
         setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new SignUpView().setVisible(true);
-//            }
-//        });
-//    }
+
 }

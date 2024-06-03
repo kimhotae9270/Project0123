@@ -8,9 +8,9 @@ import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
 public class MainView extends Frame {
-    private static int currentYear;
-    private static int currentMonth;
-    private static int currentDay;
+    private static int currentYear = 1;
+    private static int currentMonth = 1;
+    private static int currentDay = 1;
     private Label monthLabel;
     private Panel calendarPanel;
 

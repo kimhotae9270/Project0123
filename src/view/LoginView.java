@@ -18,6 +18,7 @@ public class LoginView extends Frame{
             }
         });
 
+
         Panel inputPanel = new Panel(new GridLayout(2, 2));
         Label idLabel = new Label("아이디:");
         TextField idField = new TextField();

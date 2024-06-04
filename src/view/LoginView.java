@@ -5,8 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
-public class LoginView extends Frame{
+public class LoginView extends Frame implements PopUpView{
 
     void loginView(){
         setTitle("로그인 폼");
@@ -17,7 +21,7 @@ public class LoginView extends Frame{
                 dispose();
             }
         });
-
+        setLocationRelativeTo(null);
 
         Panel inputPanel = new Panel(new GridLayout(2, 2));
         Label idLabel = new Label("아이디:");
@@ -56,20 +60,33 @@ public class LoginView extends Frame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //로그인 기능 구현
-               /* CheckInfo ci = new CheckInfo(idField.getText(),pwField.getText());
-                if(ci.getAllclear()) {
-                    //NowLoginUser.setID(idField.getText(),pwField.getText());
-                    //new UpdateCalendar();
-                    dispose();
+                String username = idField.getText();
+                String password = pwField.getText();
+                boolean login = false;
+
+
+                try (BufferedReader reader = new BufferedReader(new FileReader("C:\\schedule_system\\User\\user.txt"))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] userInfo = line.split(";");
+                        if (userInfo[0].equals(username) && userInfo[1].equals(password)) {
+                            login = true;
+                            MainView main = new MainView();
+                            main.mainView();
+                            dispose();
+                            break;
+                        }
+                    }
+                    if(!login){
+                        popUp("아이디 또는 비밀번호가 틀렸습니다");
+                    }
+
+
+                } catch (IOException ex) {
+                    popUp("회원가입이 진행된 유저가 없습니다");
                 }
-                else {
-                    //herePopUp("아이디 혹은 패스워드가 틀렸습니다");
-                }*/
-                dispose();
-                //로그인이 되면 메인 뷰로
-                MainView main = new MainView();
-                main.mainView();
+
+
             }
 
 
@@ -84,6 +101,22 @@ public class LoginView extends Frame{
         });
         // 화면에 프레임 표시
         setVisible(true);
+    }
+    public void popUp(String message) {
+        Dialog dialog = new Dialog(this, "로그인", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new Label(message));
+        dialog.setLocationRelativeTo(null);
+        Button ok = new Button("확인");
+        ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        dialog.add(ok);
+        dialog.setSize(230, 100);
+        dialog.setVisible(true);
+
     }
 
 

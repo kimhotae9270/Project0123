@@ -39,7 +39,7 @@ public class ScheduleView extends Frame{
         checklistFrame.add(checklistPanel, BorderLayout.CENTER);
         checklistFrame.add(buttonPanel, BorderLayout.SOUTH);
         checklistFrame.setSize(400, 400);
-
+        checklistFrame.setLocationRelativeTo(null);
 
         try (BufferedReader lst = new BufferedReader(new FileReader(filePath))) {
             String line;

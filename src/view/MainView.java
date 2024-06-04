@@ -21,6 +21,7 @@ public class MainView extends Frame {
         setTitle(currentYear + "년 " + currentMonth + "월");
         setSize(500, 500);
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
 
         monthLabel = new Label();
         updateMonthLabel();

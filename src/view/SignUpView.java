@@ -8,12 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
-public class SignUpView extends JFrame {
+public class SignUpView extends JFrame implements PopUpView{
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
@@ -53,16 +50,38 @@ public class SignUpView extends JFrame {
                 } else {
 
 
-                    File f = new File("C:\\schedule_system");
-                    if(!f.exists()) {
-                        f.mkdirs();
-                    }
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\schedule_system\\user.txt", true))) {
-                        writer.write(username + ";" + password);
-                        writer.newLine();
-                        JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
+
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\schedule_system\\User\\user.txt", true))) {
+                        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\schedule_system\\User\\user.txt"))) {
+                            String line;
+                            boolean user = false;
+                            while ((line = reader.readLine()) != null) {
+
+                                String[] userInfo = line.split(";");
+                                if (userInfo[0].equals(username) && userInfo[1].equals(password)) {
+                                    popUp("이미 사용중인 아이디 입니다");
+                                    user = true;
+                                    break;
+                                }else{
+                                    writer.write(username + ";" + password);
+                                    writer.newLine();
+                                    JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
+                                    dispose();
+                                    break;
+                                }
+                            }
+                            if(!user){
+                                writer.write(username + ";" + password);
+                                writer.newLine();
+                                JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
+                                dispose();
+                            }
+                        } catch (IOException ex) {
+                            popUp("오류가 발생했습니다!");
+                        }
+
                     } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(SignUpView.this, "회원 가입 중 오류가 발생했습니다!", "오류", JOptionPane.ERROR_MESSAGE);
+                        popUp("오류가 발생했습니다!");
                     }
                 }
             }
@@ -86,6 +105,21 @@ public class SignUpView extends JFrame {
         add(panel);
         setVisible(true);
     }
+    public void popUp(String message) {
+        Dialog dialog = new Dialog(this, "로그인", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new Label(message));
+        Button ok = new Button("확인");
+        dialog.setLocationRelativeTo(null);
+        ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        dialog.add(ok);
+        dialog.setSize(200, 100);
+        dialog.setVisible(true);
 
+    }
 
 }

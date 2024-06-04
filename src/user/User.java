@@ -1,6 +1,8 @@
 package user;
 
-public class User extends Person{
+
+
+public class User extends Person {
     private static String id;
 
     @Override

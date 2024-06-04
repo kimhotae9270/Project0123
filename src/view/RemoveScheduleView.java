@@ -14,7 +14,7 @@ public class RemoveScheduleView implements PopUpView{
         deleteWeekFrame = new Frame("주차 삭제 선택");
         deleteWeekFrame.setSize(300, 150);
         deleteWeekFrame.setLayout(new BorderLayout());
-
+        deleteWeekFrame.setLocationRelativeTo(null);
         Label label = new Label("삭제할 주차를 선택해 주세요", Label.CENTER);
         deleteWeekFrame.add(label, BorderLayout.NORTH);
 

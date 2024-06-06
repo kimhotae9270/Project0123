@@ -1,14 +1,13 @@
 package view;
 
+import user.CheckInfo;
+import user.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class LoginView extends Frame implements PopUpView{
 
@@ -62,31 +61,17 @@ public class LoginView extends Frame implements PopUpView{
             public void actionPerformed(ActionEvent e) {
                 String username = idField.getText();
                 String password = pwField.getText();
-                boolean login = false;
-
-
-                try (BufferedReader reader = new BufferedReader(new FileReader("C:\\schedule_system\\User\\user.txt"))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        String[] userInfo = line.split(";");
-                        if (userInfo[0].equals(username) && userInfo[1].equals(password)) {
-                            login = true;
-                            MainView main = new MainView();
-                            main.mainView();
-                            dispose();
-                            break;
-                        }
-                    }
-                    if(!login){
-                        popUp("아이디 또는 비밀번호가 틀렸습니다");
-                    }
-
-
-                } catch (IOException ex) {
-                    popUp("회원가입이 진행된 유저가 없습니다");
+                CheckInfo login = new CheckInfo();
+                login.checkInfo(username,password);
+                if(login.getAllclear()){
+                    MainView main = new MainView();
+                    User user = new User();
+                    user.setUserId(username);
+                    main.mainView();
+                    dispose();
+                }else{
+                    popUp("아이디 또는 비밀번호가 틀렸습니다");
                 }
-
-
             }
 
 

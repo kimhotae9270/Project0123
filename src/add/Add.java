@@ -3,16 +3,16 @@ package add;
 import user.User;
 import view.MainView;
 
-abstract class Add {
+public abstract class Add {
     private String userPath;
-    Add(){
 
-        userPath = User.getUserFolder()+"\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth();
+    public abstract void addDay(String newItem);
+
+    public void initializePath() {
+        this.userPath = User.getUserFolder() + "\\" + MainView.getCurrentYear() + "\\" + MainView.getCurrentMonth() + "\\" + MainView.getCurrentDay() + ".txt";
     }
-    public String getUserPath(){
+
+    public String getUserPath() {
         return userPath;
     }
-    abstract void addSchedule();
 }
-
-

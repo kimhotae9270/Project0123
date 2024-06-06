@@ -1,5 +1,6 @@
 package view;
 
+import user.CheckInfo;
 import user.User;
 
 import javax.swing.*;
@@ -44,46 +45,31 @@ public class SignUpView extends JFrame implements PopUpView{
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 String confirmPassword = new String(confirmPasswordField.getPassword());
-
-                if (!password.equals(confirmPassword)) {
-                    JOptionPane.showMessageDialog(SignUpView.this, "비밀번호가 일치하지 않습니다!", "오류", JOptionPane.ERROR_MESSAGE);
-                } else {
-
-
-
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\schedule_system\\User\\user.txt", true))) {
-                        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\schedule_system\\User\\user.txt"))) {
-                            String line;
-                            boolean user = false;
-                            while ((line = reader.readLine()) != null) {
-
-                                String[] userInfo = line.split(";");
-                                if (userInfo[0].equals(username) && userInfo[1].equals(password)) {
-                                    popUp("이미 사용중인 아이디 입니다");
-                                    user = true;
-                                    break;
-                                }else{
-                                    writer.write(username + ";" + password);
-                                    writer.newLine();
-                                    JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
-                                    dispose();
-                                    break;
-                                }
-                            }
-                            if(!user){
-                                writer.write(username + ";" + password);
-                                writer.newLine();
-                                JOptionPane.showMessageDialog(SignUpView.this, "회원 가입이 성공적으로 완료되었습니다!", "성공", JOptionPane.INFORMATION_MESSAGE);
-                                dispose();
-                            }
-                        } catch (IOException ex) {
-                            popUp("오류가 발생했습니다!");
+                if(!password.equals(confirmPassword)) {
+                    popUp("비밀번호가 서로 다릅니다");
+                }else{
+                    CheckInfo ck = new CheckInfo();
+                    ck.checkInfo(username);
+                    if(ck.getIsIDtrue()){
+                        popUp("이미 사용중인 아이디 입니다");
+                    }else{
+                        String folderPath = "C:\\schedule_system\\User";
+                        File folder = new File(folderPath);
+                        if(!folder.exists()){
+                            folder.mkdirs();
                         }
-
-                    } catch (IOException ex) {
-                        popUp("오류가 발생했습니다!");
+                        try(FileWriter fw = new FileWriter(folderPath+"\\user.txt",true)){
+                            File u = new File(folderPath+"\\"+username);
+                            u.mkdirs();
+                            fw.write(username+";"+password+"\n");
+                            popUp("회원가입에 성공했습니다");
+                            dispose();
+                        }catch (IOException err){
+                            System.out.println(err);
+                        }
                     }
                 }
+
             }
         });
         panel.add(signupButton);

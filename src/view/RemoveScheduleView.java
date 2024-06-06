@@ -6,68 +6,90 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RemoveScheduleView implements PopUpView{
+public class RemoveScheduleView implements PopUpView {
     private Frame deleteWeekFrame;
     private CheckboxGroup checkboxGroup;
 
     public void removeScheduleView() {
-        deleteWeekFrame = new Frame("주차 삭제 선택");
-        deleteWeekFrame.setSize(300, 150);
-        deleteWeekFrame.setLayout(new BorderLayout());
-        deleteWeekFrame.setLocationRelativeTo(null);
-        Label label = new Label("삭제할 주차를 선택해 주세요", Label.CENTER);
-        deleteWeekFrame.add(label, BorderLayout.NORTH);
+        Frame frame = new Frame("일정 삭제하기");
 
-        Panel radioPanel = new Panel(new FlowLayout());
+        // 프레임 크기 설정
+        frame.setSize(300, 200);
 
-        checkboxGroup = new CheckboxGroup();
+        // 레이아웃 설정 (수직 배치를 위해 GridBagLayout 사용)
+        frame.setLayout(new GridBagLayout());
+        frame.setLocationRelativeTo(null);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5); // 컴포넌트 간의 간격 설정
 
-        Checkbox week1Checkbox = new Checkbox("1주차", checkboxGroup, false);
-        radioPanel.add(week1Checkbox);
+        // 시작 일 드롭다운 메뉴 생성
+        Choice startDateDropdown = new Choice();
+        startDateDropdown.add("Start Date");
+        for (int i = 1; i <= 31; i++) {
+            startDateDropdown.add("" + i);
+        }
 
-        Checkbox week2Checkbox = new Checkbox("2주차", checkboxGroup, false);
-        radioPanel.add(week2Checkbox);
+        // 끝 일 드롭다운 메뉴 생성
+        Choice endDateDropdown = new Choice();
+        endDateDropdown.add("End Date");
+        for (int i = 1; i <= 31; i++) {
+            endDateDropdown.add("" + i);
+        }
 
-        Checkbox week3Checkbox = new Checkbox("3주차", checkboxGroup, false);
-        radioPanel.add(week3Checkbox);
+        // 레이블 생성
+        Label startDateLabel = new Label("시작 일: ");
+        Label endDateLabel = new Label("끝 일: ");
 
-        Checkbox week4Checkbox = new Checkbox("4주차", checkboxGroup, false);
-        radioPanel.add(week4Checkbox);
-
-        Checkbox thisMonthCheckbox = new Checkbox("이번달 삭제", checkboxGroup, false);
-        radioPanel.add(thisMonthCheckbox);
-
-        Checkbox allCheckbox = new Checkbox("전체 삭제", checkboxGroup, false);
-        radioPanel.add(allCheckbox);
-
-        deleteWeekFrame.add(radioPanel, BorderLayout.CENTER);
 
         Button confirmButton = new Button("확인");
+
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Checkbox selectedCheckbox = checkboxGroup.getSelectedCheckbox();
-                if (selectedCheckbox != null) {
-                    String selectedWeek = selectedCheckbox.getLabel();
+                String startDate = startDateDropdown.getSelectedItem();
+                String endDate = endDateDropdown.getSelectedItem();
 
-                } else {
-                    //선택해 주세요 팝업 구현
-                    popUp("주차를 선택해주세요.");
+                System.out.println("선택된 시작 일: " + startDate);
+                System.out.println("선택된 끝 일: " + endDate);
 
-                }
             }
         });
-        deleteWeekFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                deleteWeekFrame.dispose();
+
+        // 프레임에 레이블과 드롭다운 메뉴 및 버튼 추가
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        frame.add(startDateLabel, gbc);
+
+        gbc.gridx = 1;
+        frame.add(startDateDropdown, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        frame.add(endDateLabel, gbc);
+
+        gbc.gridx = 1;
+        frame.add(endDateDropdown, gbc);
+
+
+
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        frame.add(confirmButton, gbc);
+
+        // 윈도우 이벤트 핸들러 설정 (닫기 버튼 클릭 시 프로그램 종료)
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                frame.dispose();
             }
         });
-        deleteWeekFrame.add(confirmButton, BorderLayout.SOUTH);
 
-        deleteWeekFrame.setVisible(true);
+        frame.setVisible(true);
     }
 
-    public void popUp(String text){
+    public void popUp(String text) {
         System.out.println("구현");
     }
+
 
 }

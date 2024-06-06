@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -48,8 +49,7 @@ public class ShareScheduleView implements PopUpView{
                 String name = nameField.getText();
                 String schedule = scheduleField.getText();
                 if (!name.isEmpty() && !schedule.isEmpty()) {
-                    System.out.println("이름: " + name);
-                    System.out.println("일정: " + schedule);
+
 
                     saveSchedule(name, schedule);
                 }
@@ -68,22 +68,39 @@ public class ShareScheduleView implements PopUpView{
         writeCheckList.setVisible(true);
     }
     private void saveSchedule(String name, String schedule) {
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(User.getUserFolder() + "\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\"+MainView.getCurrentDay()+".txt", true))) {
-            try(BufferedWriter writer1 = new BufferedWriter(new FileWriter("C:\\schedule_system\\User\\"+name+"\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\"+MainView.getCurrentDay()+".txt"))){
-                writer.write(schedule);
-                writer.newLine();
-                writer1.write(schedule);
-                writer1.newLine();
-                popUp("이벤트가 성공적으로 공유되었습니다!");
-            }catch  (IOException ex){
-                popUp("해당 유저가 존재하지 않습니다");
+        String myPath = User.getUserFolder() + "\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth();
+        File userPath = new File(myPath);
+        String friendPath = "C:\\schedule_system\\User\\"+name;
+        File friend = new File(friendPath);
+        if (!userPath.exists()){
+            userPath.mkdirs();
+        }
+        if(!friend.exists()){
+            popUp("존재하지 않는 유저 입니다");
+        }else{
+            friend = new File(friendPath+"\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth());
+            if(!friend.exists()){
+                friend.mkdirs();
             }
 
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(User.getUserFolder() + "\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\"+MainView.getCurrentDay()+".txt", true))) {
+                try(BufferedWriter writer1 = new BufferedWriter(new FileWriter("C:\\schedule_system\\User\\"+name+"\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\"+MainView.getCurrentDay()+".txt",true))){
+                    writer.write("0;"+schedule+"\n");
 
-        } catch (IOException ex) {
-            popUp("이벤트 공유 중 오류가 발생했습니다!");
+                    writer1.write("0;"+schedule+"\n");
+
+                    popUp("이벤트가 성공적으로 공유되었습니다!");
+                    writeCheckList.dispose();
+                }catch (IOException ex){
+                    popUp("이벤트 공유 중 오류가 발생했습니다!");
+                }
+
+
+            }catch (IOException ex) {
+                popUp("이벤트 공유 중 오류가 발생했습니다!");
+            }
         }
+
     }
 
     public void popUp(String message) {
@@ -91,11 +108,15 @@ public class ShareScheduleView implements PopUpView{
         dialog.setLayout(new FlowLayout());
         dialog.add(new Label(message));
         Button ok = new Button("확인");
+        dialog.setLocationRelativeTo(null);
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
             }
         });
+        dialog.add(ok);
+        dialog.setSize(250, 100);
+        dialog.setVisible(true);
     }
 
 }

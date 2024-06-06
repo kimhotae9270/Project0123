@@ -1,10 +1,15 @@
 package view;
 
+import add.AddDay;
+import com.sun.tools.javac.Main;
+import user.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class AddScheduleView {
     private Frame writeCheckList = new Frame("할일 추가하기");
@@ -12,7 +17,7 @@ public class AddScheduleView {
     private Button addButton;
     private Button shareButton;
 
-    public void scheduleAddView() {
+    public void scheduleAddView(Runnable runnable) {
         writeCheckList.setSize(500, 200);
         writeCheckList.setLayout(new BorderLayout());
         TextArea textArea = new TextArea("", 5, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
@@ -25,8 +30,11 @@ public class AddScheduleView {
         addButton = new Button("추가");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String newItem = textArea.getText().trim();
-
+                String newItem = textArea.getText();
+                AddDay add = new AddDay();
+                add.addDay(newItem);
+                writeCheckList.dispose();
+                runnable.run();
             }
         });
         buttonPanel.add(addButton);

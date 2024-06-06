@@ -1,14 +1,16 @@
 package Remove;
 
+import user.User;
+import view.MainView;
+
 import java.io.File;
 
 public abstract class RemoveSca {
-    protected static String basePath = "filepath/folderpath-";
+    protected static String userPath = "filepath/folderpath-";
     
     public abstract void remove(String identifier);
 
-    protected boolean deleteFile(String filePath) {
-        File file = new File(filePath);
-        return file.exists() && file.delete();
+    public void initializePath() {
+        this.userPath = User.getUserFolder() + "\\" + MainView.getCurrentYear() + "\\" + MainView.getCurrentMonth() + "\\" + MainView.getCurrentDay() + ".txt";
     }
 }

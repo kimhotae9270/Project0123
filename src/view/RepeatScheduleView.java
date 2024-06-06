@@ -1,5 +1,7 @@
 package view;
 
+import add.AddPeriod;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,56 +9,88 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class RepeatScheduleView {
-    private Frame repeatScheduleFrame;
-    private CheckboxGroup checkboxGroup;
-    private TextField textField;
+
 
     public void repeatScheduleView() {
-        repeatScheduleFrame = new Frame("반복 일정 추가");
-        repeatScheduleFrame.setSize(300, 110);
-        repeatScheduleFrame.setLayout(new BorderLayout());
+        Frame frame = new Frame("일정 추가하기");
 
-        Panel weekPanel = new Panel(new GridLayout(1, 7));
-        checkboxGroup = new CheckboxGroup();
+        // 프레임 크기 설정
+        frame.setSize(400, 200);
 
-        String[] daysOfWeek = {"월", "화", "수", "목", "금", "토", "일"};
-        for (String day : daysOfWeek) {
-            Checkbox checkbox = new Checkbox(day, checkboxGroup, false);
-            weekPanel.add(checkbox);
+        // 레이아웃 설정 (수직 배치를 위해 GridBagLayout 사용)
+        frame.setLayout(new GridBagLayout());
+        frame.setLocationRelativeTo(null);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5); // 컴포넌트 간의 간격 설정
+
+        // 시작 일 드롭다운 메뉴 생성
+        Choice startDateDropdown = new Choice();
+        startDateDropdown.add("Start Date");
+        for (int i = 1; i <= 31; i++) {
+            startDateDropdown.add("" + i);
         }
 
-        repeatScheduleFrame.add(weekPanel, BorderLayout.NORTH);
+        // 끝 일 드롭다운 메뉴 생성
+        Choice endDateDropdown = new Choice();
+        endDateDropdown.add("End Date");
+        for (int i = 1; i <= 31; i++) {
+            endDateDropdown.add("" + i);
+        }
 
-        Panel inputPanel = new Panel(new BorderLayout());
-        Label inputLabel = new Label("일정 : ");
-        inputPanel.add(inputLabel, BorderLayout.WEST);
-
-        textField = new TextField(20);
-        inputPanel.add(textField, BorderLayout.CENTER);
-
-
-
-        repeatScheduleFrame.add(inputPanel, BorderLayout.CENTER);
-
+        // 레이블 생성
+        Label startDateLabel = new Label("시작 일: ");
+        Label endDateLabel = new Label("끝 일: ");
+        Label scheduleLabel = new Label("일정: ");
+        TextField scheduleTextField = new TextField(20);
         Button confirmButton = new Button("확인");
+
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Checkbox selectedCheckbox = checkboxGroup.getSelectedCheckbox();
-                String selectedDay = selectedCheckbox != null ? selectedCheckbox.getLabel() : "선택 없음";
-                String schedule = textField.getText();
-                System.out.println("선택된 요일: " + selectedDay);
-                System.out.println("일정: " + schedule);
+                String startDate = startDateDropdown.getSelectedItem();
+                String endDate = endDateDropdown.getSelectedItem();
+                String schedule = scheduleTextField.getText();
+                AddPeriod ap = new AddPeriod();
+                ap.addSchedule(Integer.parseInt(startDate),Integer.parseInt(endDate),schedule);
             }
         });
-        repeatScheduleFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                repeatScheduleFrame.dispose();
-            }
-        });
-        repeatScheduleFrame.add(confirmButton, BorderLayout.SOUTH);
 
-        repeatScheduleFrame.setVisible(true);
+        // 프레임에 레이블과 드롭다운 메뉴 및 버튼 추가
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        frame.add(startDateLabel, gbc);
+
+        gbc.gridx = 1;
+        frame.add(startDateDropdown, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        frame.add(endDateLabel, gbc);
+
+        gbc.gridx = 1;
+        frame.add(endDateDropdown, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        frame.add(scheduleLabel, gbc);
+
+        gbc.gridx = 1;
+        frame.add(scheduleTextField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        frame.add(confirmButton, gbc);
+
+        // 윈도우 이벤트 핸들러 설정 (닫기 버튼 클릭 시 프로그램 종료)
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                frame.dispose();
+            }
+        });
+
+        frame.setVisible(true);
     }
+
 
 
 }

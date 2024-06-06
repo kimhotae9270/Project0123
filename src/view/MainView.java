@@ -52,7 +52,7 @@ public class MainView extends Frame {
         // Create a panel to hold the center buttons with padding
         Panel centerPanel = new Panel(new FlowLayout(FlowLayout.CENTER, 10, 0));
 
-        Button repeatButton = new Button("반복 일정 추가");
+        Button repeatButton = new Button("일정 추가");
         repeatButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 반복 일정 추가 기능 구현

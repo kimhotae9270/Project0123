@@ -1,34 +1,49 @@
 package add;
 
-import java.time.LocalDate;
-import java.util.Scanner;
+import user.User;
+import view.MainView;
+import view.PopUpView;
+import view.ShareScheduleView;
 
-class AddDay extends Add {
-    private ScheduleManager scheduleManager;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-    public AddDay(ScheduleManager eventManager) {
-        this.scheduleManager = eventManager;
+public class AddDay extends Add {
+    private String filePath;
+
+    public AddDay() {
+        this.filePath = getFilePath();
     }
 
-    void addSchedule() {
-    		Scanner s = new Scanner(System.in);
-    		
-    	try {
-    		System.out.println("일정을 추가할 날짜를 입력하세요 yyyy-mm-dd");
+    private String getFilePath() {
+        // 현재 로그인한 사용자와 날짜 정보를 기반으로 파일 경로를 생성
 
-    		String dateStr = s.nextLine();
-    		LocalDate date = LocalDate.parse(dateStr);
+        String fileName = "\\" + view.MainView.getCurrentYear() + "\\" + view.MainView.getCurrentMonth();
+        return User.getUserFolder() + fileName;
+    }
 
-    		System.out.println("일정을 입력하세요");
+    public void addDay(String schedule) {
 
-    		String description = s.nextLine();
-    		SplitAdd.splitText(description);
+        File f = new File(getFilePath());
+        if(!f.exists()){
+            f.mkdirs();
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath+ "\\"+MainView.getCurrentDay()+".txt", true))) {
+            String[] texts = schedule.split("\n");
 
-    		Event event = new Event(date, description);
-    		scheduleManager.addEvent(event);
-    	} catch (Exception e) {
-    		System.out.println("잘못된 형식입니다. 다시 입력하세요.");
-		}
-    	s.close();
+            for(int i = 0;i<texts.length;i++){
+                System.out.println(texts[i]);
+                writer.write("false;"+texts[i]);
+
+            }
+
+
+
+        }catch(IOException e){
+            System.out.println("업로드 실패 "+e);
+        }
+
     }
 }

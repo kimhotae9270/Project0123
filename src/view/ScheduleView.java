@@ -75,15 +75,45 @@ public class ScheduleView extends Frame{
                         refreshChecklist(filePath);
                     }
                 });
-                
+
 
             }
         });
 
+
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                RemoveView rm = new RemoveView();
+                rm.removeView(new Runnable() {
+                    @Override
+                    public void run() {
+                        try(BufferedReader r = new BufferedReader(new FileReader(filePath))){
+                            String line;
+                            List<String> list = new ArrayList<>();
+                            while ((line = r.readLine()) != null){
+                                for(Checkbox checkbox : checkboxes){
+                                    if(line.equals(checkbox.getLabel())){
 
+                                       list.add(checkbox.getState()+";"+line+"\n");
+                                    }
+                                }
+                            }
+                            try(BufferedWriter w = new BufferedWriter(new FileWriter(filePath))) {
+                                for(int i=0;i<=list.size();i++){
+                                    System.out.println(filePath);
+                                    w.write(list.get(i));
+                                }
+                            }catch (IOException err){
+                                System.out.println(err);
+                            }
+
+                        }catch (IOException err){
+                            System.out.println(err);
+                        }
+                        refreshChecklist(filePath);
+                    }
+                });
             }
         });
 

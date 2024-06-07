@@ -56,7 +56,7 @@ public class MainView extends Frame {
         repeatButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 반복 일정 추가 기능 구현
-                RepeatScheduleView rp = new RepeatScheduleView();
+                AddDay2DaySchedule rp = new AddDay2DaySchedule();
                 rp.repeatScheduleView();
             }
         });
@@ -66,7 +66,7 @@ public class MainView extends Frame {
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 일정 삭제 기능 구현
-                RemoveScheduleView rm = new RemoveScheduleView();
+                RemoveDay2DayScheduleView rm = new RemoveDay2DayScheduleView();
                 rm.removeScheduleView();
             }
         });

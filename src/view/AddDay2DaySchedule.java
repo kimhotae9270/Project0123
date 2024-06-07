@@ -1,20 +1,21 @@
 package view;
 
+import add.AddPeriod;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RemoveScheduleView implements PopUpView {
-    private Frame deleteWeekFrame;
-    private CheckboxGroup checkboxGroup;
+public class AddDay2DaySchedule implements PopUpView {
 
-    public void removeScheduleView() {
-        Frame frame = new Frame("일정 삭제하기");
+
+    public void repeatScheduleView() {
+        Frame frame = new Frame("일정 추가하기");
 
         // 프레임 크기 설정
-        frame.setSize(300, 200);
+        frame.setSize(400, 200);
 
         // 레이아웃 설정 (수직 배치를 위해 GridBagLayout 사용)
         frame.setLayout(new GridBagLayout());
@@ -40,17 +41,25 @@ public class RemoveScheduleView implements PopUpView {
         // 레이블 생성
         Label startDateLabel = new Label("시작 일: ");
         Label endDateLabel = new Label("끝 일: ");
-
-
+        Label scheduleLabel = new Label("일정: ");
+        TextField scheduleTextField = new TextField(20);
         Button confirmButton = new Button("확인");
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String startDate = startDateDropdown.getSelectedItem();
-                String endDate = endDateDropdown.getSelectedItem();
-
-                System.out.println("선택된 시작 일: " + startDate);
-                System.out.println("선택된 끝 일: " + endDate);
+                if (!(isNumeric(startDateDropdown.getSelectedItem()) && isNumeric(endDateDropdown.getSelectedItem()))) {
+                    popUp("숫자만 입력할 수 있습니다!");
+                } else {
+                    int startDate = Integer.parseInt(startDateDropdown.getSelectedItem());
+                    int endDate = Integer.parseInt(endDateDropdown.getSelectedItem());
+                    String schedule = scheduleTextField.getText();
+                    AddPeriod ap = new AddPeriod();
+                    if (startDate > endDate) {
+                        popUp("시작일이 더 클 수 없습니다!");
+                    } else {
+                        ap.addSchedule(startDate, endDate, schedule);
+                    }
+                }
 
             }
         });
@@ -70,8 +79,12 @@ public class RemoveScheduleView implements PopUpView {
         gbc.gridx = 1;
         frame.add(endDateDropdown, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        frame.add(scheduleLabel, gbc);
 
-
+        gbc.gridx = 1;
+        frame.add(scheduleTextField, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -87,9 +100,26 @@ public class RemoveScheduleView implements PopUpView {
         frame.setVisible(true);
     }
 
+    @Override
     public void popUp(String text) {
-        System.out.println("구현");
+        Frame frame = new Frame();
+        frame.setSize(300, 100);
+        frame.setLayout(new FlowLayout());
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        Label l = new Label(text) ;
+        frame.add(l);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+            }
+        });
     }
 
-
+    public static boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
 }

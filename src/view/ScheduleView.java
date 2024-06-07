@@ -71,7 +71,7 @@ public class ScheduleView extends Frame{
                 addSchedule.scheduleAddView(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("들어옴");
+
                         refreshChecklist(filePath);
                     }
                 });
@@ -83,10 +83,7 @@ public class ScheduleView extends Frame{
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //리무브 기능 구현
-                /*RemoveDay rd = new RemoveDay();
-                rd.removeSca();
-                refreshChecklist(filePath);*/
+
             }
         });
 
@@ -104,7 +101,7 @@ public class ScheduleView extends Frame{
     }
     private void loadChecklist(String filePath){
         checklistPanel.removeAll(); // 기존 체크리스트 항목을 제거
-        System.out.println(filePath);
+
         try (BufferedReader lst = new BufferedReader(new FileReader(filePath))) {
             String line;
             File file = new File(filePath);
@@ -134,7 +131,7 @@ public class ScheduleView extends Frame{
 
     //추가 할 경우 창을 다시 로드해서 보여주는 기능
     private void refreshChecklist(String filePath) {
-        System.out.println("asd");
+
         checkboxes.clear();
         loadChecklist(filePath); // 체크리스트를 다시 로드하여 새로고침
     }

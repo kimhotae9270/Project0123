@@ -22,7 +22,7 @@ public class AddScheduleView {
         writeCheckList.setLayout(new BorderLayout());
         TextArea textArea = new TextArea("", 5, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
         writeCheckList.add(textArea, BorderLayout.NORTH);
-
+        writeCheckList.setLocationRelativeTo(null);
         // Create panel for buttons
         Panel buttonPanel = new Panel();
         buttonPanel.setLayout(new FlowLayout());

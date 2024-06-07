@@ -1,21 +1,20 @@
 package view;
 
-import add.AddPeriod;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RepeatScheduleView {
+public class RemoveDay2DayScheduleView implements PopUpView {
+    private Frame deleteWeekFrame;
+    private CheckboxGroup checkboxGroup;
 
-
-    public void repeatScheduleView() {
-        Frame frame = new Frame("일정 추가하기");
+    public void removeScheduleView() {
+        Frame frame = new Frame("일정 삭제하기");
 
         // 프레임 크기 설정
-        frame.setSize(400, 200);
+        frame.setSize(300, 200);
 
         // 레이아웃 설정 (수직 배치를 위해 GridBagLayout 사용)
         frame.setLayout(new GridBagLayout());
@@ -41,17 +40,18 @@ public class RepeatScheduleView {
         // 레이블 생성
         Label startDateLabel = new Label("시작 일: ");
         Label endDateLabel = new Label("끝 일: ");
-        Label scheduleLabel = new Label("일정: ");
-        TextField scheduleTextField = new TextField(20);
+
+
         Button confirmButton = new Button("확인");
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String startDate = startDateDropdown.getSelectedItem();
                 String endDate = endDateDropdown.getSelectedItem();
-                String schedule = scheduleTextField.getText();
-                AddPeriod ap = new AddPeriod();
-                ap.addSchedule(Integer.parseInt(startDate),Integer.parseInt(endDate),schedule);
+
+                System.out.println("선택된 시작 일: " + startDate);
+                System.out.println("선택된 끝 일: " + endDate);
+
             }
         });
 
@@ -70,12 +70,8 @@ public class RepeatScheduleView {
         gbc.gridx = 1;
         frame.add(endDateDropdown, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        frame.add(scheduleLabel, gbc);
 
-        gbc.gridx = 1;
-        frame.add(scheduleTextField, gbc);
+
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -91,6 +87,9 @@ public class RepeatScheduleView {
         frame.setVisible(true);
     }
 
+    public void popUp(String text) {
+        System.out.println("구현");
+    }
 
 
 }

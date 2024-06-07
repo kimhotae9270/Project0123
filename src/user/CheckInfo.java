@@ -22,11 +22,11 @@ public class CheckInfo {
                 String line;
                 while ((line = id.readLine()) != null) {
                     String[] user = line.split(";");
-                    if(ID.equals(user[0])) {
-                        isIDtrue = true;
-                        if(PassWord.equals(user[1])){
-                            Allclear = true;
-                        }
+                    if(ID.equals(user[0]) && PassWord.equals(user[1])) {
+
+                        
+                        Allclear = true;
+
                     }
                 }
             } catch (IOException e) {

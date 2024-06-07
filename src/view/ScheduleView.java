@@ -17,7 +17,7 @@ public class ScheduleView extends Frame{
 
     private Button addButton = new Button("추가");
     private Button removeButton = new Button("일정 지우기");
-
+    List<String> list = new ArrayList<>();
     List<Checkbox> checkboxes = new ArrayList<>();
     void scheduleView(){
         checklistPanel.setLayout(new GridLayout(0, 1, 10, 10)); // 세로로 배치, 수직 및 수평 간격 추가
@@ -90,20 +90,26 @@ public class ScheduleView extends Frame{
                     public void run() {
                         try(BufferedReader r = new BufferedReader(new FileReader(filePath))){
                             String line;
-                            List<String> list = new ArrayList<>();
+
                             while ((line = r.readLine()) != null){
                                 for(Checkbox checkbox : checkboxes){
-                                    if(line.equals(checkbox.getLabel())){
 
-                                       list.add(checkbox.getState()+";"+line+"\n");
+                                    String[] texts = line.split(";");
+                                    if(texts[1].equals(checkbox.getLabel())){
+
+                                        list.add(checkbox.getState()+";"+texts[1]+"\n");
+
                                     }
                                 }
                             }
                             try(BufferedWriter w = new BufferedWriter(new FileWriter(filePath))) {
-                                for(int i=0;i<=list.size();i++){
-                                    System.out.println(filePath);
+
+                                for(int i=0;i<list.size();i++){
+
                                     w.write(list.get(i));
+
                                 }
+                                list.clear();
                             }catch (IOException err){
                                 System.out.println(err);
                             }

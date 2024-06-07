@@ -18,10 +18,10 @@ public class AddPeriod extends AddDay {
 
         for (int day = start; day <= end; day++) {
 
-            String folder = User.getUserFolder()+"\\"+MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth();
-            String filePath = folder+"\\"+day+".txt";
 
-            File file = new File(folder);
+            String filePath = getUserPath()+day+".txt";
+
+            File file = new File(getUserPath());
             if(!file.exists()){
                 file.mkdirs();
             }

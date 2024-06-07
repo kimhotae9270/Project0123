@@ -1,12 +1,14 @@
 package view;
 
+import Remove.RemoveDay2Day;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RemoveDay2DayScheduleView implements PopUpView {
+public class RemoveDay2DayScheduleView {
     private Frame deleteWeekFrame;
     private CheckboxGroup checkboxGroup;
 
@@ -46,11 +48,11 @@ public class RemoveDay2DayScheduleView implements PopUpView {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String startDate = startDateDropdown.getSelectedItem();
-                String endDate = endDateDropdown.getSelectedItem();
-
-                System.out.println("선택된 시작 일: " + startDate);
-                System.out.println("선택된 끝 일: " + endDate);
+                int startDate = Integer.parseInt(startDateDropdown.getSelectedItem()) ;
+                int endDate = Integer.parseInt(endDateDropdown.getSelectedItem()) ;
+                RemoveDay2Day rd = new RemoveDay2Day();
+                rd.removeDay2Day(startDate,endDate);
+                frame.dispose();
 
             }
         });
@@ -87,9 +89,7 @@ public class RemoveDay2DayScheduleView implements PopUpView {
         frame.setVisible(true);
     }
 
-    public void popUp(String text) {
-        System.out.println("구현");
-    }
+
 
 
 }

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class AddDay2DaySchedule implements PopUpView {
+public class AddDay2DayScheduleView implements PopUpView {
 
 
     public void repeatScheduleView() {
@@ -58,6 +58,8 @@ public class AddDay2DaySchedule implements PopUpView {
                         popUp("시작일이 더 클 수 없습니다!");
                     } else {
                         ap.addSchedule(startDate, endDate, schedule);
+                        popUp("일정이 추가되었습니다!");
+                        frame.dispose();
                     }
                 }
 

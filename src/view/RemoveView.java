@@ -19,7 +19,7 @@ public class RemoveView {
     private Frame remmovelistFrame = new Frame("일정 지우기");
     private Panel removelistPanel = new Panel();
 
-
+    private Button removeAllButton = new Button("하루 지우기");
     private Button removeButton = new Button("일정 지우기");
 
     List<Checkbox> checkboxes = new ArrayList<>();
@@ -32,7 +32,7 @@ public class RemoveView {
         Panel buttonPanel = new Panel();
 
         buttonPanel.add(removeButton);
-
+        buttonPanel.add(removeAllButton);
         remmovelistFrame.setLayout(new BorderLayout());
         remmovelistFrame.add(removelistPanel, BorderLayout.CENTER);
         remmovelistFrame.add(buttonPanel, BorderLayout.SOUTH);
@@ -67,6 +67,15 @@ public class RemoveView {
         public void actionPerformed(ActionEvent e) {
             RemoveSelect re = new RemoveSelect();
             re.remove(checkboxes);
+            runnable.run();
+            remmovelistFrame.dispose();
+        }
+    });
+    removeAllButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            File f= new File(filePath);
+            f.delete();
             runnable.run();
             remmovelistFrame.dispose();
         }

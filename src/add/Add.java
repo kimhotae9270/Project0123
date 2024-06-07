@@ -8,8 +8,9 @@ public abstract class Add {
 
     public abstract void addDay(String newItem);
 
-    public void initializePath() {
-        this.userPath = User.getUserFolder() + "\\" + MainView.getCurrentYear() + "\\" + MainView.getCurrentMonth() + "\\" + MainView.getCurrentDay() + ".txt";
+    public Add() {
+        this.userPath = User.getUserFolder() + "\\" + MainView.getCurrentYear() + "\\" + MainView.getCurrentMonth() + "\\";
+
     }
 
     public String getUserPath() {

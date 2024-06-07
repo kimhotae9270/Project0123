@@ -56,7 +56,7 @@ public class MainView extends Frame {
         repeatButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 반복 일정 추가 기능 구현
-                AddDay2DaySchedule rp = new AddDay2DaySchedule();
+                AddDay2DayScheduleView rp = new AddDay2DayScheduleView();
                 rp.repeatScheduleView();
             }
         });

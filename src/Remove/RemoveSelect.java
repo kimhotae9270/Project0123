@@ -5,20 +5,23 @@ import view.MainView;
 
 import java.awt.*;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RemoveSelect extends Remove{
+
+    private String filePath = getFilePath()+MainView.getCurrentDay()+".txt";
     @Override
     public void remove(List<Checkbox> cb) {
-        String filePath = User.getUserFolder()+"\\"+ MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\"+MainView.getCurrentDay()+".txt";
+
         try(BufferedWriter w = new BufferedWriter(new FileWriter(filePath))) {
             for(Checkbox checkbox : cb){
-                System.out.println(checkbox.getState());
                 if(!checkbox.getState()){
-                    System.out.println(checkbox.getLabel());
+
                     w.write(checkbox.getState()+";"+checkbox.getLabel()+"\n");
                 }
             }
@@ -27,4 +30,5 @@ public class RemoveSelect extends Remove{
             System.out.println("삭제 실패");
         }
     }
+
 }

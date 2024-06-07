@@ -9,9 +9,13 @@ import java.util.List;
 
 public abstract class Remove {
     private String filePath;
-    Remove(){
-        this.filePath = User.getUserFolder()+"\\"+ MainView.getCurrentYear()+"\\"+MainView.getCurrentDay()+".txt";
+    public Remove(){
+        this.filePath = User.getUserFolder()+"\\"+ MainView.getCurrentYear()+"\\"+MainView.getCurrentMonth()+"\\";
 
     }
+    String getFilePath(){
+        return filePath;
+    }
     abstract void remove(List<Checkbox> cb);
+
 }
